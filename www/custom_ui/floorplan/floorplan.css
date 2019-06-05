@@ -1,0 +1,124 @@
+svg, svg * {
+  vector-effect: non-scaling-stroke !important;
+  pointer-events: all !important;
+}
+
+.entity:hover:not(.static-text):not(.static-temp):not(.static-text-date):not:(.static-text-time) {
+  stroke: #14c800 !important;
+  stroke-width: 1px !important;
+  stroke-opacity: 1 !important;
+}
+
+.warning-background, .warning-text-background  {
+  fill: #14c800 !important;
+  fill-opacity: 1 !important;
+  stroke: #14ff00 !important;
+  stroke-width: 1px !important;
+}
+
+.switch-on {
+  fill: #00c8ff !important;
+}
+
+.switch-off {
+  fill: #527494 !important;
+}
+
+.button-on {
+  fill: #00c8ff !important;
+  fill-opacity: 0.25;
+}
+
+.button-off {
+  fill: #527494 !important;
+  fill-opacity: 0.5;
+}
+
+.button-panel-on {
+  fill: #005cb2 !important;
+}
+
+.button-panel-off {
+  fill: #286414 !important;
+}
+
+/* Light */
+
+.light-off {
+  fill: #286414 !important;
+}
+
+.light-on {
+  fill: #FFD700 !important;
+}
+
+.pc-on {
+  fill: #8B4513 !important;
+}
+
+/* Temperature sensor */
+
+.temp-very-low-background {
+  fill: #d9edf7 !important;
+  fill-opacity: 1 !important;
+}
+
+.temp-below-average-background {
+  fill: #dcefe8 !important;
+  fill-opacity: 1 !important;
+}
+
+.temp-average-background {
+  fill: #dff0d8 !important;
+  fill-opacity: 1 !important;
+}
+
+.temp-very-high-background {
+  fill: #f2dede !important;
+  fill-opacity: 1 !important;
+}
+
+/* Media player */
+
+.squeezebox-off {
+  fill: #8AA8A7 !important;
+}
+
+.squeezebox-on {
+  fill: #2baaa6 !important;
+}
+
+.static-text
+{
+  fill: #14c800;
+  font-family : Helvetica;
+  font-weight : bold;
+  font-size : 15px;
+}
+
+.static-text-date
+{
+  font-family : Helvetica;
+  font-weight : bold;
+  font-size : 16px;
+  fill : #14c800;
+}
+
+.static-text-time
+{
+  font-family : Helvetica;
+  font-weight : bold;
+  font-size : 35px;
+  fill: #14c800;
+}
+
+.static-temp
+{
+  font-family: Helvetica;
+  font-size: 22px;
+  fill: #14c800;
+}
+
+.window-open {
+  fill: #FF0000 !important;
+}
