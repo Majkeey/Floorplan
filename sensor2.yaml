@@ -1,0 +1,13 @@
+#FLOORPLAN
+- platform: command_line
+  name: Time
+  command: date +'%H:%M'
+- platform: command_line
+  name: Day of Week
+  command: date +'%A'
+- platform: command_line
+  name: Month
+  command: date +'%B'
+- platform: command_line
+  name: Day
+  command: date +'%d'
