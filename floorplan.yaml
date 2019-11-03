@@ -6,28 +6,35 @@ date_format: DD-MMM-YYYY
 hide_app_toolbar:
 
 groups:
-  - name: YeeLights
+  - name: Lights
     entities:
-       - light.yeelight_color1_34ce008baff3
-       - light.yeelight_color1_7811dc6815ae
-       - light.yeelight_color1_7811dc68270d
-       - light.yeelight_color1_34ce00900f3e
-       - light.yeelight_color1_7c49eb12c687
-       - light.gateway_light_gateway
-       - light.gateway_light_gateway2
+      - switch.wall_switch_bathroommain
+      - switch.wall_switch_left_officeleft
+      - switch.wall_switch_right_officeright
+      - switch.wall_switch_left_guestroomleft
+      - switch.wall_switch_right_guestroomright
+      - switch.wall_switch_techroom
+      - switch.wall_switch_wc
+      - switch.wall_switch_left_bedroomleft
+      - switch.wall_switch_right_bedroomright
+      - switch.wall_switch_right_pantry
+      - switch.wall_switch_right_garden
+      - light.yeelight_color1_34ce008baff3
+      - light.yeelight_color1_7811dc6815ae
+      - light.yeelight_color1_7811dc68270d
+      - light.yeelight_color1_34ce00900f3e
+      - light.yeelight_color1_7c49eb12c687
+      - light.gateway_light_gateway
+      - light.gateway_light_gateway2
     states:
       - state: 'on'
         class: 'light-on'
       - state: 'off'
         class: 'light-off'
-  - name: Lights
-    entities:
-      - switch.wall_switch_bathroommain
-    states:
-      - state: 'on'
-        class: 'light-on'
-      - state: 'off'
-        class: 'light-off'   
+    action: 
+      domain: homeassistant
+      service: toggle
+      
   - name: Binary sensors
     entities:
       - binary_sensor.door_window_sensor_guestroom
@@ -46,11 +53,12 @@ groups:
         class: 'light-off'
       - state: 'on'
         class: 'window-open'
+        
   - name: Media
     entities:
       - switch.pc_baska
       - switch.pc_majkeey
-      - media_player.samsung_tv_remote
+      - binary_sensor.tv
     states:
       - state: 'on'
         class: 'pc-on'
@@ -59,6 +67,7 @@ groups:
     action:
       domain: homeassistant
       service: toggle
+      
   - name: text_percent
     entities:
       - sensor.humidity_guestroom
@@ -67,8 +76,16 @@ groups:
       - sensor.humidity_office
       - sensor.humidity_techroom
       - sensor.humidity_bathroom
+      - sensor.weather_humidity
     text_template: '${entity.state ? Math.ceil(entity.state) + "%": "undefined"}'
     class_template: 'return "static-text";'
+    
+  - name: text_kmh
+    entities:
+      - sensor.weather_wind_speed
+    text_template: '${entity.state ? Math.ceil(entity.state) + "m/s": "undefined"}'
+    class_template: 'return "static-text";'
+    
   - name: text_temperature
     entities:
       - sensor.temperature_bedroom
@@ -77,33 +94,53 @@ groups:
       - sensor.temperature_office
       - sensor.temperature_techroom
       - sensor.temperature_bathroom
+      - sensor.weather_temperature
     text_template: '${entity.state ? Math.ceil(entity.state) + "°": "undefined"}'
     class_template: 'return "static-temp";'
     
-  # - name: Time
-    # entities:
-      # - sensor.day
-    # text_template: '${entity.state ? Math.ceil(entity.state) : "undefined"}'
-    # class_template: 'return "static-text";'
-  # - name: Date
-    # entities:
-      # - sensor.day_of_week
-      # - sensor.month
-      # - sensor.time
-      # - sensor.dark_sky_summary
-    # text_template: '${entity.state ? entity.state : "undefined"}'
-    # class_template: 'return "static-text";'
-  # - name: All Lights
-    # entities:
-      # - group.lights
-    # states:
-      # - state: 'on'
-        # class: 'light-on'
-      # - state: 'off'
-        # class: 'button-panel-off'
-    # action:
-      # domain: homeassistant
-      # service: turn_off
+  - name: Time
+    entities:
+      - sensor.day
+    text_template: '${entity.state ? Math.ceil(entity.state) : "undefined"}'
+    class_template: 'return "static-text";'
+    
+  - name: Date
+    entities:
+      - sensor.day_of_week
+      - sensor.month
+      - sensor.time
+    text_template: '${entity.state ? entity.state : "undefined"}'
+    class_template: 'return "static-text";'
+  
+  - name: Graph
+    entities:
+      - history_graph.weather_graph
+      - history_graph.windows
+      - history_graph.temperature_graph
+      - history_graph.humidity_graph
+    image_template: '${entity.attributes.entity_picture}'
+    
+  - name: All Lights
+    entities:
+      - group.switchez
+    states:
+      - state: 'on'
+        class: 'light-on'
+      - state: 'off'
+        class: 'button-panel-off'
+    action:
+      domain: homeassistant
+      service: turn_off
+
+  - name: All Windows
+    entities:
+      - group.windows
+    states:
+      - state: 'on'
+        class: 'window-open'
+      - state: 'off'
+        class: 'button-panel-off'
+        
   # - name: All PC
     # entities:
       # - group.pc
@@ -115,14 +152,8 @@ groups:
     # action:
       # domain: homeassistant
       # service: turn_off
-  # - name: All Windows
-    # entities:
-      # - group.allwindows
-    # states:
-      # - state: 'on'
-        # class: 'window-open'
-      # - state: 'off'
-        # class: 'button-panel-off'
+      
+
   # - name: All Doors
     # entities:
       # - group.alldoors
